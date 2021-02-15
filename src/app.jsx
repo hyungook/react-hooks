@@ -1,50 +1,27 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import './app.css';
 
+
+const useInput = (initialValue) => {
+  const [value, setValue] = useState(initialValue);
+  const onChange = (event) =>{
+    console.log(event.target);
+  }
+  return {value, onChange};
+}
+
 const App = () => {
-  const [item, setItem] = useState(1);
-  const incrementItem = () => {setItem(item + 1);}
-  const decrementItem = () => {setItem(item - 1);}
+const name = useInput("Mr.")
   return (
     <>
-    <div>{item}</div>
-    <button onClick={incrementItem}>Increment</button>
-    <button onClick={decrementItem}>Decrement</button>
+    <h1>hello</h1>
+    {/* <input placeholder="Name" value={name.value} />   */}
+    {/* <input placeholder="Name" value={name.value} onChange={name.onChange} />   */}
+    {/* 아래와 같이 작성할 수 있다. / 아래와 같이 작성하면 name 안에 있는 모든 것들을 풀어준다. 따라서 name은 name.value가 되어 똑같아진다 */}
+    <input placeholder="Name" {...name} />
     </>
   );
 }
 
 
-class UppUgly extends Component {
-  state = {
-    item: 1
-  }
-  render() {
-    const {item} = this.state;
-    return (
-      <div className={"App"}>
-        <h1>{item}</h1>
-        <button onClick={this.incrementItem}>Increment</button>
-        <button onClick={this.decrementItem}>Decrement</button>
-      </div>
-    );
-  }
-  incrementItem = () =>{
-    this.setState(state => {
-      return {
-        item: state.item + 1
-      }
-    })
-  }
-  decrementItem = () => {
-    this.setState(state => {
-      return {
-        item: state.item - 1
-      }
-    })
-  }
-}
-
 export default App;
-
-// export default UppUgly;
