@@ -1,38 +1,51 @@
 import React, { useState } from 'react';
 import './app.css';
 
+const content = [
+  {
+    tab: "Section 1",
+    content: "I'm the content of the Section 1"
+  },
+  {
+    tab: "Section 2",
+    content: "I'm the content of the Section 2"
+  },
+];
 
-const useInput = (initialValue, validator) => {
-  const [value, setValue] = useState(initialValue);
-  const onChange = (event) =>{
-      const {target: {value}} = event;
-      
-    let willUpdate = true;
-    if(typeof validator === "function") {
-      willUpdate = validator(value);
-    }
-    if(willUpdate) {
-      setValue(value);
-    }
+
+
+const useTabs = (initialTab, allTabs) => {
+  const {currentIndex, setCurrentIndex} = useState(initialTab);
+
+  if(!allTabs  || !Array.isArray(allTabs)) {
+    return;
   }
-  return {value, onChange};
+  
+  return {
+    currentItem: allTabs[currentIndex],
+    changeItem: setCurrentIndex
+  }
 }
 
 const App = () => {
-  // const maxLen = (value) => value.length <= 10;
-  const maxLen = (value) => !value.includes("@");
-  const name = useInput("Mr.", maxLen)
+  const tabs = useTabs(0, content);
+  const {currentItem} = useTabs(0, content);
+  const {currentItecham, changeItem} = useTabs(0, content)
+
+
+  console.log(currentItem)
 
   return (
-    <>
-    <h1>hello</h1>
-    {/* <input placeholder="Name" value={name.value} />   */}
-    {/* <input placeholder="Name" value={name.value} onChange={name.onChange} />   */}
-    {/* 아래와 같이 작성할 수 있다. / 아래와 같이 작성하면 name 안에 있는 모든 것들을 풀어준다. 따라서 name은 name.value가 되어 똑같아진다 */}
-    <input placeholder="Name" {...name} />
-    </>
+    <div>
+      {content.map((section, index) => (
+        <button onClick={() => changeItem(index)}>{section.tab}</button>
+        // <button>{section.tab}</button>
+      ))}
+      {/* <div>{currentItem.content}</div> */}
+      <div>{currentItem}</div>
+    </div>
   );
-}
+};
 
 
 export default App;
