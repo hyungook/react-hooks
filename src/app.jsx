@@ -1,48 +1,44 @@
-import React, { useState } from 'react';
-import './app.css';
+import React, { useState } from "react";
 
-const content = [
+const item = [
   {
-    tab: "Section 1",
+    title: "section1",
     content: "I'm the content of the Section 1"
   },
   {
-    tab: "Section 2",
+    title: "section2",
     content: "I'm the content of the Section 2"
   },
+  {
+    title: "section3",
+    content: "I'm the content of the Section 3"
+  }
 ];
-
-
-
-const useTabs = (initialTab, allTabs) => {
-  const {currentIndex, setCurrentIndex} = useState(initialTab);
-
-  if(!allTabs  || !Array.isArray(allTabs)) {
+// in: 초기 탭 initialTab, 탭 리스트 out: 탭 리스트 아이템 , set인덱스
+const useTab = (initialTab, allTabs) => {
+  const [currentIdx, setCurrentIdx] = useState(initialTab);
+  if (!allTabs || !Array.isArray(allTabs)) {
     return;
   }
   
   return {
-    currentItem: allTabs[currentIndex],
-    changeItem: setCurrentIndex
-  }
-}
+    currentItem: allTabs[currentIdx],
+    changeItem: setCurrentIdx
+  };
+};
 
 const App = () => {
-  const tabs = useTabs(0, content);
-  const {currentItem} = useTabs(0, content);
-  const {currentItecham, changeItem} = useTabs(0, content)
 
-
-  console.log(currentItem)
-
+  const { currentItem, changeItem } = useTab(0, item);
   return (
-    <div>
-      {content.map((section, index) => (
-        <button onClick={() => changeItem(index)}>{section.tab}</button>
-        // <button>{section.tab}</button>
-      ))}
-      {/* <div>{currentItem.content}</div> */}
-      <div>{currentItem}</div>
+    <div className="App">
+      <h1>useTabs</h1>
+      <div>
+        {item.map((section, index) => (
+          <button key={index} onClick={section => changeItem(index)}>{section.title}</button>
+        ))}
+      </div>
+      <div>{currentItem.content}</div>
     </div>
   );
 };
