@@ -1,45 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './app.css';
 
-const item = [
-  {
-    title: "section1",
-    content: "I'm the content of the Section 1"
-  },
-  {
-    title: "section2",
-    content: "I'm the content of the Section 2"
-  },
-  {
-    title: "section3",
-    content: "I'm the content of the Section 3"
-  }
-];
-// in: 초기 탭 initialTab, 탭 리스트 out: 탭 리스트 아이템 , set인덱스
-const useTab = (initialTab, allTabs) => {
-  const [currentIdx, setCurrentIdx] = useState(initialTab);
-  if (!allTabs || !Array.isArray(allTabs)) {
-    return;
-  }
-  
-  return {
-    currentItem: allTabs[currentIdx],
-    changeItem: setCurrentIdx
-  };
-};
 
 const App = () => {
 
-  const { currentItem, changeItem } = useTab(0, item);
+const [number, setNumber] = useState(0);
+const [aNumber, swtAnumber] = useState(0);
+
+const sayHello = () => console.log("hello")
+
+// useEffect(() => {
+//   sayHello();
+// })
+// useEffect(sayHello, [number]);
+useEffect(sayHello, []);
+
+// useEffect는 ComponentDidMount, ComponentWillMonut, ComponentDidUpdate 이다.
+
   return (
     <div className="App">
-      <h1>useTabs</h1>
-      <div>
-        {item.map((section, index) => (
-          <button key={index} onClick={section => changeItem(index)}>{section.title}</button>
-        ))}
-      </div>
-      <div>{currentItem.content}</div>
+      <h1>hello</h1>
+      <button onClick={() => setNumber(number + 1)}>{number}</button>
+      <button onClick={() => swtAnumber(aNumber + 1)}>{aNumber}</button>
     </div>
   );
 };
